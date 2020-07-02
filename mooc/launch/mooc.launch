@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find mooc)/launch/indefinite_navigation.launch"/>
+
+  <group ns="$(arg veh)">
+  </group>
+</launch>
