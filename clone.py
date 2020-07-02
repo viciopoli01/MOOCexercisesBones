@@ -89,7 +89,7 @@ class NotebookFinder(object):
 sys.meta_path.append(NotebookFinder())
 
 
-import notebook.exercise as mooc_exercise
+import exercise as mooc_exercise
 
 
 os.mkdir("PROVA")
