@@ -1,5 +1,5 @@
 # parameters
-ARG REPO_NAME="mooc-exercises"
+ARG REPO_NAME="mooc"
 
 # ==================================================>
 # ==> Do not change this code
@@ -22,14 +22,11 @@ WORKDIR "${REPO_PATH}"
 RUN mkdir -p "${REPO_PATH}"
 
 # copy dependencies files only
-COPY ./dockerimage/dependencies-apt.txt "${REPO_PATH}/"
-COPY ./dockerimage/dependencies-py.txt "${REPO_PATH}/"
-
-COPY ./notebook/exercise.ipynb "${REPO_PATH}/"
+COPY ./dependencies-apt.txt "${REPO_PATH}/"
+COPY ./dependencies-py.txt "${REPO_PATH}/"
 
 # install apt dependencies
 RUN apt-get update \
-  && apt-get install -y git \
   && apt-get install -y --no-install-recommends \
     $(awk -F: '/^[^#]/ { print $1 }' dependencies-apt.txt | uniq) \
   && rm -rf /var/lib/apt/lists/*
@@ -37,34 +34,20 @@ RUN apt-get update \
 # install python dependencies
 RUN pip install -r ${REPO_PATH}/dependencies-py.txt
 
-     
-
-# create the packages
-RUN mkdir -p "${REPO_PATH}/packages" \
-    && cd ${REPO_PATH}/packages \
-    && git clone https://github.com/viciopoli01/MOOCexercisesBones.git
-#    && sudo mv MOOCexercisesBones/mooc ${REPO_PATH}/packages \
-#    && python MOOCexercisesBones/clone.py \
-#    && sudo rm -rf MOOCexercisesBones
-
-
 # copy the source code
 ADD . "${REPO_PATH}/"
 
-
-
-
 # build packages
-#RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \
-#  catkin build \
-#    --workspace ${CATKIN_WS_DIR}/
-#
-## define launch script
-#ENV LAUNCHFILE "${REPO_PATH}/launch.sh"
-#
-## define command
-#CMD ["bash", "-c", "${LAUNCHFILE}"]
-## <== Do not change this code
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \
+  catkin build \
+    --workspace ${CATKIN_WS_DIR}/
+
+# define launch script
+ENV LAUNCHFILE "${REPO_PATH}/launch.sh"
+
+# define command
+CMD ["bash", "-c", "${LAUNCHFILE}"]
+# <== Do not change this code
 # <==================================================
 
 # maintainer
