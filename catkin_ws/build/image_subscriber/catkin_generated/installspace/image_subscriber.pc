@@ -1,0 +1,8 @@
+prefix=/home/arsimone/duckietown/MOOCexercisesBones/catkin_ws/install
+
+Name: image_subscriber
+Description: Description of image_subscriber
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

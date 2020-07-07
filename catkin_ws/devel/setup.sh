@@ -1,0 +1,1 @@
+/home/arsimone/duckietown/MOOCexercisesBones/catkin_ws/devel/.private/catkin_tools_prebuild/setup.sh
