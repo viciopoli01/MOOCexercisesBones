@@ -24,6 +24,7 @@ RUN mkdir -p "${REPO_PATH}"
 # copy dependencies files only
 COPY ./dependencies-apt.txt "${REPO_PATH}/"
 COPY ./dependencies-py.txt "${REPO_PATH}/"
+COPY ./exercise.ipynb "${REPO_PATH}/packages/mooc/"
 
 # install apt dependencies
 RUN apt-get update \
