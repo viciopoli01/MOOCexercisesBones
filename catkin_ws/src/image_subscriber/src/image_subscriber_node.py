@@ -4,6 +4,10 @@ import rospy
 import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
+# from mooc import NotebookFinder
+# sys.meta_path.append(NotebookFinder())
+# import ipynb.fs.full.test_exercise import ourCanny
+from test_exercise.py import ourCanny
 
 class image_subscriber:
 
@@ -21,10 +25,11 @@ class image_subscriber:
 
     (rows,cols,channels) = cv_image.shape
 
-    if cols > 60 and rows > 60 :
-      cv2.circle(cv_image, (int(rows/2),int(cols/2)), int(rows/4), 255)
+    # if cols > 60 and rows > 60 :
+    #   cv2.circle(cv_image, (int(rows/2),int(cols/2)), int(rows/4), 255)
+    cv_image_out = ourCanny(cv_image,75,150)
 
-    self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+    self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image_out, "mono8"))
 
 def main(args):
   image_subscriber_node = image_subscriber()
